@@ -1,15 +1,14 @@
-const fs= require ('fs')
-const csv =require('fast-csv')
 
-
-var res=fs.createReadStream('customer-data.csv')
-// const solution=fs.createReadStream('Data.json')
-  .pipe(csv())
-  .on('data',function (data){
-  console.log(data)
+const file='./customer-data.csv'
+const csv =require('csvtojson')
+const fs =require('fs')
+const path=require('path')
+var result=[]
+csv()
+.fromFile(file)
+.on('end_parsed',(jsonObj)=>{
+  fs.writeFileSync(path.join(__dirname,'newfile.json'),JSON.stringify(jsonObj))
 })
-.on('end',function(data){
-  console.log('read finished')
-});
-const resultat=JSON.stringify(res)
-const creat=fs.writeFileSync('res.json',resultat)
+.on('done',(error)=>{
+  console.log('end')
+})
