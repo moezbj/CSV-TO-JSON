@@ -11,3 +11,5 @@ var res=fs.createReadStream('customer-data.csv')
 .on('end',function(data){
   console.log('read finished')
 });
+const resultat=JSON.stringify(res)
+const creat=fs.writeFileSync('res.json',resultat)
